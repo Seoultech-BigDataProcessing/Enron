@@ -1,0 +1,8 @@
+.venv/
+__pycache__/
+# 원본 데이터 (1.4GB, GitHub 파일 크기 제한 100MB 초과). Kaggle "The Enron Email Dataset"에서 받는다.
+emails.csv/
+# API 키. enron/.env.example을 복사해 enron/.env로 만든다.
+.env
+# graphrag LLM 응답 캐시 (500MB 이상)
+enron/cache/
