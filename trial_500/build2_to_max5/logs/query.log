@@ -1,0 +1,19 @@
+2026-11-23 01:00:46.0526 - INFO - graphrag_llm.metrics.log_metrics_writer - Metrics for openai/gpt-6-luna: {
+  "attempted_request_count": 74,
+  "successful_response_count": 74,
+  "failed_response_count": 0,
+  "failure_rate": 0.0,
+  "requests_with_retries": 0,
+  "retries": 0,
+  "retry_rate": 0.0,
+  "compute_duration_seconds": 524.7839922904968,
+  "compute_duration_per_response_seconds": 7.288666559590234,
+  "cache_hit_rate": 0.0,
+  "streaming_responses": 2,
+  "responses_with_tokens": 72,
+  "prompt_tokens": 886624,
+  "completion_tokens": 78489,
+  "total_tokens": 965113,
+  "tokens_per_response": 13404.347222222223,
+  "cost_per_response": 0.0
+}
