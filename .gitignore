@@ -6,3 +6,5 @@ emails.csv/
 .env
 # graphrag LLM 응답 캐시 (500MB 이상)
 enron/cache/
+
+emails.csv
