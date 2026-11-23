@@ -1,3 +1,3 @@
 # 입력 CSV는 줄바꿈을 바꾸지 않는다. 바뀌면 graphrag가 다른 문서로 인식한다.
 enron/input/*.csv -text
-trial_500/input/*.csv -text
+previous_builds/*/input/*.csv -text

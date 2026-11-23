@@ -125,10 +125,10 @@ graphrag 로그의 토큰 수에 가격표 단가를 곱한 값은 실제 청구
 | 경로 | 내용 |
 |---|---|
 | `preprocess.py` | 전처리 스크립트 |
-| `trial_500/input/emails.csv` | 전처리된 500통 (2차 기준) |
-| `trial_500/input/preprocess_stats.json` | 단계별 건수 기록 |
+| `previous_builds/2_test_500mails_max5_recipients/input/emails.csv` | 전처리된 500통 (2차 기준) |
+| `previous_builds/2_test_500mails_max5_recipients/input/preprocess_stats.json` | 단계별 건수 기록 |
 | `enron/settings.yaml` | graphrag 설정 (본 구축과 같이 쓴다) |
-| `trial_500/build2_to_max5/` | 2차 구축 결과와 로그 (받는 사람 5명까지) |
-| `trial_500/build1_all_recipients/` | 1차 구축 결과와 로그 (받는 사람 전부, 비교용) |
+| `previous_builds/2_test_500mails_max5_recipients/` | 2차 구축 결과와 로그 (받는 사람 5명까지) |
+| `previous_builds/1_test_500mails_all_recipients/` | 1차 구축 결과와 로그 (받는 사람 전부, 비교용) |
 
-`enron/` 폴더는 본 구축(3,661통) 전용이다. `enron/cache`와 `.env`는 git에 올라가지 않는다.
+`enron/` 폴더는 본 그래프(8,431통) 전용이다. `enron/cache`와 `.env`는 git에 올라가지 않는다.
