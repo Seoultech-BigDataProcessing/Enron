@@ -11,6 +11,7 @@ Enron 메일로 GraphRAG 지식그래프를 구축하고, 넓은 질문을 도�
 | [docs/trial_500.md](docs/trial_500.md) | 500통 시험 구축에서 정한 것과 결과 |
 | [docs/scale_decision.md](docs/scale_decision.md) | 본 구축 규모를 정하기 위한 비용과 선택지 |
 | [docs/main_build.md](docs/main_build.md) | 본 구축 결과와 품질, 요금 등급, 질문 비용 예상 |
+| [docs/question_run_2001.md](docs/question_run_2001.md) | 질문 30개를 2층으로 돌린 결과 (비용, 응답 분류, 답이 없는 이유) |
 
 ## 받은 뒤 할 일
 
@@ -36,7 +37,7 @@ Enron 메일로 GraphRAG 지식그래프를 구축하고, 넓은 질문을 도�
    graphrag query --root ./enron --method global "What were the main issues in this period?"
    ```
 
-   질문 하나에 약 0.4달러로 예상한다. 본 그래프에서 아직 재 보지 않았다.
+   질문 하나(2층까지)에 약 0.1 ~ 0.4달러가 든다. 단독으로 돌리면 약 0.37달러, 30문항을 연속으로 돌리면 평균 약 0.11달러였다. 잰 결과는 [docs/question_run_2001.md](docs/question_run_2001.md)에 있다.
 
 ## 폴더
 
