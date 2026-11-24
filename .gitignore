@@ -6,5 +6,5 @@ emails.csv/
 .env
 # graphrag LLM 응답 캐시 (500MB 이상)
 enron/cache/
-
-emails.csv
+# graphrag 질의 로그 (질문을 돌릴 때마다 늘어난다)
+enron/logs/query.log
