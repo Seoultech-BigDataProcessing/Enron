@@ -1,0 +1,3 @@
+﻿id,section,topic,status,seconds,n_reports,n_batches,n_batches_failed,n_key_points,n_cited_reports,cited_reports,est_prompt_tokens,est_output_tokens,est_cost_usd,response_chars
+Q02,상위 몇 개,주정부 현물 전력 구매의 판매자,answered,43.5,4036,276,0,27,1,676,3428847,39667,0.3746,152
+Q10,상위 몇 개,3분기 일회성 비용,no_data,29.7,4036,276,0,0,0,,3428847,31037,0.3737,75

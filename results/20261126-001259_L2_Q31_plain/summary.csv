@@ -1,0 +1,2 @@
+﻿id,section,topic,status,seconds,n_reports,n_batches,n_batches_failed,n_key_points,n_cited_reports,cited_reports,est_prompt_tokens,est_output_tokens,est_cost_usd,response_chars
+Q31,상위 몇 개 (포괄),자료의 주요 주제,answered,97.8,4036,276,0,828,15,2426 1732 268 1702 1720 2780 743 381 873 2792 423 2677 12 2195 417,3428847,169849,0.3887,1007

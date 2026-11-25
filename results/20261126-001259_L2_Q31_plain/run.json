@@ -1,0 +1,29 @@
+{
+  "created_at": "2026-11-26T00:13:00+09:00",
+  "settings": {
+    "community_level": 2,
+    "dynamic": false,
+    "response_type": "Multiple Paragraphs",
+    "plain": true,
+    "data_dir": null,
+    "model": "gpt-6-luna",
+    "call_args": {
+      "service_tier": "default"
+    }
+  },
+  "graphrag_version": "3.3.0",
+  "n_selected": 1,
+  "questions_file": "/Users/junsu/Desktop/Enron/docs/questions_b_2001.md",
+  "usd_per_mtok": 0.108,
+  "note": "토큰은 map 단계 호출의 추정치로 실제보다 몇 % 낮다(reduce 단계 제외). 비용은 이 토큰에 캐시 없는 단가를 곱한 값이라 프롬프트 캐시가 적용되면 실제는 더 낮다. 정확한 사용량은 실행이 끝날 때 enron/logs/query.log 끝에 남는 Metrics 블록(이번 실행 전체 합계)과 OpenAI 콘솔(cached 입력 토큰 포함)에서 본다.",
+  "updated_at": "2026-11-26T00:14:40+09:00",
+  "totals": {
+    "done": 1,
+    "answered": 1,
+    "no_data": 0,
+    "est_prompt_tokens": 3428847,
+    "est_output_tokens": 169849,
+    "est_cost_usd": 0.39,
+    "seconds": 97.8
+  }
+}

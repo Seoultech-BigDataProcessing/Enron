@@ -3,7 +3,7 @@
 예)
   python run_questions.py --dry-run                        # API를 부르지 않고 계획과 예상 비용만 본다
   python run_questions.py --only Q03 Q05 --level 0         # 일부만, 싼 설정(0층)으로
-  python run_questions.py                                  # 30문항 전부, 2층 (약 11달러 예상)
+  python run_questions.py                                  # 질문 문서의 모든 문항, 2층 (문항 수와 예상 비용은 --dry-run으로 확인)
   python run_questions.py --out results/20261124-1530_L2   # 중단된 실행을 이어서 (끝난 문항은 건너뛴다)
 
 결과는 results/<시각>_L<층>/ 에 남는다.
