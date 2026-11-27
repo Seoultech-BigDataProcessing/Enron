@@ -1,0 +1,86 @@
+{
+  "created_at": "2026-11-27T21:11:54+09:00",
+  "settings": {
+    "community_level": 2,
+    "dynamic": false,
+    "response_type": "Multiple Paragraphs",
+    "plain": "mixed",
+    "data_dir": null,
+    "model": "gpt-6-luna",
+    "call_args": {
+      "service_tier": "default"
+    }
+  },
+  "graphrag_version": "3.3.0",
+  "n_selected": 45,
+  "questions_file": "/Users/junsu/Desktop/Enron/docs/questions_b_2001.md",
+  "usd_per_mtok": 0.108,
+  "note": "토큰은 map 단계 호출의 추정치로 실제보다 몇 % 낮다(reduce 단계 제외). 비용은 이 토큰에 캐시 없는 단가를 곱한 값이라 프롬프트 캐시가 적용되면 실제는 더 낮다. 정확한 사용량은 실행이 끝날 때 enron/logs/query.log 끝에 남는 Metrics 블록(이번 실행 전체 합계)과 OpenAI 콘솔(cached 입력 토큰 포함)에서 본다.",
+  "updated_at": "2026-11-27T21:51:52+09:00",
+  "totals": {
+    "done": 45,
+    "answered": 41,
+    "no_data": 4,
+    "est_prompt_tokens": 154298115,
+    "est_output_tokens": 3778964,
+    "est_cost_usd": 17.07,
+    "seconds": 2752.7
+  },
+  "prompt_modes": {
+    "공통 지시문 + 유형별 지시문 + 질문": "Q01~Q30",
+    "질문만 (--plain)": "Q31~Q45"
+  },
+  "sources": {
+    "Q01, Q03~Q09, Q11~Q30": "이 폴더에서 2026-11-27에 새로 실행 (28문항). Q03은 첫 실행 중 컴퓨터가 절전에 들어가 시간 기록이 어긋나서, 같은 날 다시 실행한 기록으로 바꿨다",
+    "Q02, Q10": "results/20261125-233422_L2_Q02Q10 에서 복사",
+    "Q31": "results/20261126-001259_L2_Q31_plain 에서 복사",
+    "Q32~Q45": "results/20261125-233422_L2_broad_plain 에서 복사"
+  },
+  "query_log_metrics": {
+    "note": "새로 돌린 28문항(Q01, Q03~Q09, Q11~Q30)의 enron/logs/query.log Metrics 블록. query.log는 저장소에 올라가지 않아 여기에 옮겼다. 첫 문항(Q01)으로 API를 먼저 확인해서 runs가 두 번으로 나뉘어 있고, total은 runs의 합이다. Q03은 첫 실행(runs의 두 번째 블록에 들어 있다)이 절전에 걸려 q03_rerun으로 다시 돌렸고, 기록은 다시 돌린 것이다. 같은 프롬프트라 토큰이 거의 같아서 q03_rerun은 total에 더하지 않았다. 최종 reduce(스트리밍) 호출은 토큰이 잡히지 않는다 (streaming_responses − responses_with_tokens = 25회). 복사한 17문항은 실행 단위 합계가 없어 각 기록의 usage_estimate를 쓴다.",
+    "runs": [
+      {
+        "logged_at": "2026-11-27 21:12:34",
+        "attempted_request_count": 277,
+        "successful_response_count": 277,
+        "failed_response_count": 0,
+        "streaming_responses": 1,
+        "responses_with_tokens": 276,
+        "prompt_tokens": 3492667,
+        "completion_tokens": 60862,
+        "total_tokens": 3553529,
+        "compute_duration_seconds": 736.6816701889038
+      },
+      {
+        "logged_at": "2026-11-27 21:45:49",
+        "attempted_request_count": 7476,
+        "successful_response_count": 7476,
+        "failed_response_count": 0,
+        "streaming_responses": 24,
+        "responses_with_tokens": 7452,
+        "prompt_tokens": 94297041,
+        "completion_tokens": 2427454,
+        "total_tokens": 96724495,
+        "compute_duration_seconds": 42180.83035612106
+      }
+    ],
+    "total": {
+      "requests": 7753,
+      "failed": 0,
+      "prompt_tokens": 97789708,
+      "completion_tokens": 2488316
+    },
+    "q03_rerun": {
+      "logged_at": "2026-11-27 21:51:14",
+      "attempted_request_count": 277,
+      "successful_response_count": 277,
+      "failed_response_count": 0,
+      "streaming_responses": 1,
+      "responses_with_tokens": 276,
+      "prompt_tokens": 3499291,
+      "completion_tokens": 98763,
+      "total_tokens": 3598054,
+      "compute_duration_seconds": 953.2393651008606
+    }
+  }
+}
