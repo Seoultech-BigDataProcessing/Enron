@@ -12,6 +12,7 @@ Enron 메일로 GraphRAG 지식그래프를 구축하고, 넓은 질문을 도�
 | [docs/scale_decision.md](docs/scale_decision.md) | 본 구축 규모를 정하기 위한 비용과 선택지 |
 | [docs/main_build.md](docs/main_build.md) | 본 구축 결과와 품질, 요금 등급, 질문 비용 예상 |
 | [docs/question_run_2001.md](docs/question_run_2001.md) | 질문 30개를 2층으로 돌린 결과 (비용, 응답 분류, 답이 없는 이유) |
+| [docs/before_after.md](docs/before_after.md) | 가지치기·조기 종료 작업 전후를 비교하는 방법 (응답 변화량, 보고서 선택 변화, 속도·토큰) |
 
 ## 받은 뒤 할 일
 
@@ -55,6 +56,8 @@ Enron 메일로 GraphRAG 지식그래프를 구축하고, 넓은 질문을 도�
    ```
    python preprocess.py --mailboxes dasovich-j kean-s shapiro-r steffes-j --start 2001-01-01 --end 2002-01-01
    ```
+
+   결과 `enron/input/emails.csv`(8,431통)의 SHA-256은 `afb34347ba1faf96422ecdf01956403c984c794d69dcec07b99d91604a3c088b`이다. 전처리 결과가 이 값과 같으면 같은 입력이다.
 
 3. 구축한다. 8,431통을 처음부터 구축하면 약 25달러, 6시간쯤으로 예상한다.
 

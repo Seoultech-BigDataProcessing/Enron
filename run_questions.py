@@ -7,13 +7,12 @@
   python run_questions.py --out results/20261124-1530_L2   # 중단된 실행을 이어서 (끝난 문항은 건너뛴다)
 
 결과는 results/<시각>_L<층>/ 에 남는다.
-  answers.md        사람이 읽는 기록: 질문, 응답, 인용한 보고서, 정답(채점 기준)
+  answers.md        사람이 읽는 기록: 질문, 응답, 인용한 보고서
   summary.csv       문항별 한 줄 요약 (엑셀로 열 수 있다)
   records/Q05.json  문항별 전체 기록: 실제로 보낸 프롬프트, 응답, 묶음별 보고서 번호, 점수가 붙은 핵심 문장
   run.json          실행 조건과 합계
 
 보내는 프롬프트는 docs/questions_b_2001.md의 공통 지시문 + 유형별 지시문 + 질문이다.
-정답(docs/questions_b_2001_evidence.md)은 answers.md에만 붙이고 모델에는 보내지 않는다.
 이 스크립트는 `graphrag query --method global`과 같은 api.global_search를 부른다.
 """
 from __future__ import annotations
@@ -85,19 +84,6 @@ def parse_questions(path: Path) -> tuple[str, list[dict]]:
         elif want_instr and ln.strip() and not ln.startswith(("|", ">", "#")):
             section_instr, want_instr = ln.strip(), False
     return common, questions
-
-
-def parse_answer_key(path: Path) -> dict[str, dict]:
-    """정답 문서의 표에서 문항별 정답과 원문 근거 번호를 뽑는다. 채점 기록용이며 모델에는 보내지 않는다."""
-    if not path.exists():
-        return {}
-    key: dict[str, dict] = {}
-    for ln in path.read_text(encoding="utf-8").splitlines():
-        if ROW.match(ln):
-            cells = split_row(ln)
-            if len(cells) >= 4:
-                key[cells[0]] = {"answer": " | ".join(cells[2:-1]), "evidence": cells[-1]}
-    return key
 
 
 def select_questions(questions: list[dict], only: list[str] | None) -> list[dict]:
@@ -265,7 +251,7 @@ def load_records(out_dir: Path) -> list[dict]:
     return [json.loads(p.read_text(encoding="utf-8")) for p in sorted((out_dir / "records").glob("Q??.json"))]
 
 
-def render_answers_md(run: dict, records: list[dict], key: dict, rep_index: dict) -> str:
+def render_answers_md(run: dict, records: list[dict], rep_index: dict) -> str:
     s, t = run["settings"], run["totals"]
     L = ["# 질문 응답 기록", ""]
     L.append(f"- 실행: {run['created_at']} (갱신 {run['updated_at']})")
@@ -303,9 +289,6 @@ def render_answers_md(run: dict, records: list[dict], key: dict, rep_index: dict
             for cid in cited:
                 lv, title = rep_index.get(cid, (None, "(보고서 정보 없음)"))
                 L.append(f"- {cid} · {'L' + str(lv) if lv is not None else '?'} · {title}")
-        k = key.get(r["id"])
-        if k:
-            L += ["", "**정답 (채점 기준)**", "", f"> {k['answer']}", "", f"원문 근거 번호(연간 CSV): {k['evidence']}"]
         L.append("")
     return "\n".join(L) + "\n"
 
@@ -325,7 +308,7 @@ def write_summary_csv(path: Path, records: list[dict]) -> None:
                         u["prompt_tokens"], u["output_tokens"], u["cost_usd"], len(r["response"])])
 
 
-def finalize(out_dir: Path, run: dict, key: dict, rep_index: dict) -> dict:
+def finalize(out_dir: Path, run: dict, rep_index: dict) -> dict:
     """records/ 를 읽어 run.json, summary.csv, answers.md 를 다시 만든다. 중간에 멈춰도 그때까지의 기록이 보인다."""
     records = load_records(out_dir)
     run["updated_at"] = datetime.now().astimezone().isoformat(timespec="seconds")
@@ -340,7 +323,7 @@ def finalize(out_dir: Path, run: dict, key: dict, rep_index: dict) -> dict:
     }
     write_json(out_dir / "run.json", run)
     write_summary_csv(out_dir / "summary.csv", records)
-    (out_dir / "answers.md").write_text(render_answers_md(run, records, key, rep_index), encoding="utf-8")
+    (out_dir / "answers.md").write_text(render_answers_md(run, records, rep_index), encoding="utf-8")
     return run["totals"]
 
 
@@ -425,8 +408,6 @@ async def run_all(args, config, tables, todo, common, out_dir: Path, settings: d
 def parse_args() -> argparse.Namespace:
     ap = argparse.ArgumentParser(description="평가 질문을 graphrag global 검색으로 일괄 실행하고 응답 기록을 파일로 남긴다.")
     ap.add_argument("--questions", default=str(HERE / "docs" / "questions_b_2001.md"), help="질문 문서")
-    ap.add_argument("--answers", default=str(HERE / "docs" / "questions_b_2001_evidence.md"),
-                    help="정답 문서. answers.md에 붙이는 용도이며 모델에는 보내지 않는다")
     ap.add_argument("--root", default=str(HERE / "enron"), help="graphrag 프로젝트 폴더")
     ap.add_argument("--data", help="다른 구축 결과 폴더(parquet이 있는 곳). 예: previous_builds/3_first_half_3661mails/output")
     ap.add_argument("--level", type=int, default=2, help="읽을 커뮤니티 층. 기본 2. 0은 80개만 읽어 싸고 빠르다")
@@ -455,13 +436,12 @@ def main() -> None:
     root = Path(args.root).resolve()
     data = Path(args.data).resolve() if args.data else None
     out_dir = Path(args.out).resolve() if args.out else HERE / "results" / f"{datetime.now():%Y%m%d-%H%M%S}_L{args.level}"
-    questions_path, answers_path = Path(args.questions).resolve(), Path(args.answers).resolve()
+    questions_path = Path(args.questions).resolve()
 
     common, questions = parse_questions(questions_path)
     if not questions:
         sys.exit(f"질문을 찾지 못했다: {questions_path}")
     selected = select_questions(questions, args.only)
-    key = parse_answer_key(answers_path)
 
     try:
         config, tables = load_graph(root, data)
@@ -493,7 +473,7 @@ def main() -> None:
     done_ids = {p.stem for p in (out_dir / "records").glob("Q??.json")} if (out_dir / "records").exists() else set()
     todo = selected if args.force else [q for q in selected if q["id"] not in done_ids]
 
-    print(f"질문 {len(selected)}개 선택 (정답표 {sum(q['id'] in key for q in selected)}개 연결) · 층 {args.level} · "
+    print(f"질문 {len(selected)}개 선택 · 층 {args.level} · "
           f"{'질문만 전송' if args.plain else '지시문 포함'} · 모델 {mi['model']}")
     if n_reports is not None:
         print(f"읽는 보고서 {n_reports:,}개 → 질문당 입력 약 {per_q_tokens / 1e6:.1f}M 토큰, 약 ${per_q_cost:.2f} (캐시 없는 단가 기준 추정)")
@@ -527,7 +507,7 @@ def main() -> None:
     })
 
     def finalize_cb() -> dict:
-        return finalize(out_dir, run, key, rep_index)
+        return finalize(out_dir, run, rep_index)
 
     try:
         asyncio.run(run_all(args, config, tables, todo, common, out_dir, settings, finalize_cb))

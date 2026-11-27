@@ -1,7 +1,7 @@
 # 바꾼 질문 17개 실행 결과 (2001년 그래프, 2층)
 
 2026-11-25에 바꾸거나 새로 넣은 질문 17개를 본 그래프(`enron/output`)에 한 번씩 돌린 결과다. 바꾼 상위형 2개(Q02, Q10)와 포괄 질문 15개(Q31~Q45)다. 가지치기와 조기 종료는 적용하지 않았다.
-응답 판정은 응답을 읽고 나눈 1차 판정이다. 포괄 질문은 채점 기준이 아직 없다.
+응답 판정은 응답을 읽고 나눈 1차 판정이다. 이 결과는 [작업 전후 비교](before_after.md)의 작업 전 기록이다. 이 문서의 '정답'은 지금은 지운 정답표(커밋 747dd8e의 `docs/questions_b_2001_evidence.md`)를 가리킨다.
 
 ## 한눈에 보기
 
@@ -123,7 +123,6 @@
 | Q02 | 그대로 둔다. 정답이 보고서에 있는데 기준선이 틀리는 문항이라, 값 단위 집계의 효과를 보여 주기 좋다 |
 | Q10 | 둘 중 하나를 고른다. 보고서를 가로질러 이어야 답이 나오는 어려운 문항으로 남기거나, 한 보고서 안에 순위가 들어 있는 사실로 다시 바꾼다 |
 | Q31 | 질문의 "비중"을 "중요한"으로 바꾼다. 지금은 모델이 표의 가중치 열을 순위 기준으로 삼는다 |
-| Q32~Q35 | 순위 유보를 인정하고, 든 후보가 정답 후보와 맞는지로 채점할지 정한다 |
 | Q44 | "엔론의 재무 위기는 2001년 동안 어떻게 전개됐나?"로 바꾸거나, 자료에 없는 것을 지어내지 않는지 보는 문항으로 둔다 |
 
 ## 7. 결과 파일과 재실행
@@ -154,7 +153,6 @@ python run_questions.py --only Q31 --plain --out results/20261126-001259_L2_Q31_
 | Q10 | 그대로 둔다. 보고서를 가로질러 이어야 답이 나오는 어려운 문항으로 쓴다 |
 | Q31 | "가장 큰 비중을 차지한"을 "가장 중요한"으로 바꾸고 다시 돌렸다 |
 | Q44 | 그대로 둔다 |
-| Q32~Q35 | 자료 속 빈도와 공개 자료로 정답 기준을 정해 판정했다. 기준은 [정답 문서](questions_b_2001_evidence.md#포괄-질문--q32q35)에 넣었다 |
 
 ### Q31 재실행
 
@@ -162,24 +160,3 @@ python run_questions.py --only Q31 --plain --out results/20261126-001259_L2_Q31_
 - 실행 규모: 질문만 전송, LLM 호출 277회(실패 0회), 입력 3,421,735토큰, 출력 216,695토큰, 98초.
 - 응답이 든 주제는 ① 캘리포니아 전력 위기와 대응 ② FERC·CPUC·NERC를 중심으로 한 에너지 시장 규제와 엔론의 정책 참여 ③ 엔론의 사업·재정 위기와 상업 분쟁(다볼, 실적 정정, 신용 하락)이다. 0층에서 가장 큰 보고서(캘리포니아 위기)와 규제·재무 위기 보고서 구성에 맞는 답이다. 인용 보고서는 15개다.
 - 표의 가중치나 등급을 인용한 핵심 문장은 142개에서 20개로 줄었다.
-
-### Q32~Q35 판정
-
-공개 자료로는 "얼마나 자주"를 셀 수 없다. 그래서 순위와 집합은 자료 속 빈도로 정하고, 공개 자료로는 각 항목이 2001년 엔론의 실제 주요 상대였는지를 확인했다. 네 문항 모두 세 곳 중 두 곳이 맞았고, 나머지 한 곳은 유보했거나 틀렸다.
-
-| 문항 | 정답 기준 | 응답 | 판정 | 공개 자료로 확인한 것 |
-|---|---|---|---|---|
-| Q32 | FERC, CPUC, DWR | FERC·CPUC. 3위는 DWR와 NERC 중 유보 | 2/3 | FERC는 엔론의 핵심 연방 규제기관이다(상원 조사, 2001년 FERC 위원장 교체). 엔론은 2001년 1월과 9월에 CPUC에 직접구매 크레딧 분쟁을 제기했다 |
-| Q33 | SCE, PG&E, Dynegy | PG&E·SCE. 3위는 Dynegy·Calpine·El Paso 중 유보 | 2/3 | Dynegy는 2001년 11월 9일 엔론 인수에 합의하고 28일 해지했다. PG&E·SCE는 직접구매 크레딧과 환급을 두고 엔론과 맞섰다 |
-| Q34 | 캘리포니아, 뉴욕, 텍사스 | 캘리포니아 확정. 텍사스·뉴멕시코 언급 | 2/3 | 엔론은 텍사스 전력 자유화 입법(1999)에 로비했고, 뉴욕에서는 공공서비스위원회를 상대로 업계 연합을 꾸렸다. 뉴멕시코 로비 기록은 1997년 것이다 |
-| Q35 | EES, ENA(EPMI 포함), Portland General | EES·EBS·EPMI | 2/3 | 2001년 3분기 실적 발표의 사업부는 Wholesale(도매), Retail(EES), Transportation & Distribution(파이프라인, Portland General, Global Assets), Broadband(EBS)다. 세 응답 모두 실제 주요 사업부이지만, 이 메일들에서는 EBS(107)보다 Portland General(148)이 더 자주 나온다 |
-
-출처:
-- [상원 정부업무위원회, FERC의 엔론 감독 조사 메모 (2002-11-12)](https://www.hsgac.senate.gov/wp-content/uploads/imo/media/doc/111202fercmemo1.pdf)
-- [CPUC, 엔론의 직접구매 크레딧 분쟁 C.01-01-032·C.01-09-011](https://docs.cpuc.ca.gov/publishedDocs/published/COMMENT_DECISION/44997.htm)
-- [Dynegy 8-K, 엔론 합병 계약 해지](https://www.sec.gov/Archives/edgar/data/0001105055/000091205701541912/a2065196z8-k.txt)
-- [CNN Money, 2001-11-28](https://money.cnn.com/2001/11/28/companies/enron/)
-- [Edison, 캘리포니아 유틸리티의 엔론 환급 합의 (2005-07-15)](https://newsroom.edison.com/releases/california-parties-settle-with-enron)
-- [Center for Public Integrity, "A Most Favored Corporation"](https://publicintegrity.org/politics/a-most-favored-corporation-enron-prevailed-in-federal-state-lobbying-efforts-49-times/)
-- [Center for Public Integrity, "Enron's Deregulation Fight"](https://publicintegrity.org/politics/enrons-deregulation-fight/)
-- [엔론 2001년 3분기 실적 발표 (2001-10-16)](https://picker.uchicago.edu/Enron/EarningsRelease%2810-16-01%29.pdf)
